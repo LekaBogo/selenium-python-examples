@@ -2,17 +2,19 @@ import time
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 driver.get('http://www2.nipponsoft.co.jp/bldoko/index.asp')
 time.sleep(3)  # Let the user actually see something!
-search_box = driver.find_element_by_id('menu2').click()
+driver.maximize_window()
+search_box = driver.find_element(By.ID,'menu2').click()
 time.sleep(3)
 
-driver.find_elements_by_name('seimei')[1].click()
+driver.find_elements(By.NAME,'seimei')[1].click()
 time.sleep(3)
 
-driver.find_element_by_name('submit_ranking').click()
+driver.find_element(By.NAME,'submit_ranking').click()
 time.sleep(3)
 
 with open('names.txt', 'w') as w:
@@ -24,7 +26,7 @@ with open('names.txt', 'w') as w:
         print(str_names)
         w.write(str_names)
         w.flush()
-        driver.find_elements_by_class_name('submit_button')[-1].click()
+        driver.find_elements(By.CLASS_NAME,'submit_button')[-1].click()
         time.sleep(3)
 
 driver.quit()
